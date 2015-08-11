@@ -1,0 +1,7 @@
+*.swp
+target/
+*.txt
+**/RouterAdapterHttpImplTest.java
+**/local.properties
+**/unittest.properties
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- if local.properties exists, its values will override those in project.properties -->
+	<context:property-placeholder ignore-resource-not-found="true" location="classpath:project.properties,local.properties"/>
+
+	<util:constant id="appArgs" static-field="com.jwm.routercontroller.Main.args" />
+	<bean id="appArgsParserService" class="com.jwm.routercontroller.util.StringArgParserService" c:args-ref="appArgs" c:parser-ref="argParser" />
+	<bean id="argParser" class="com.jwm.routercontroller.util.StringArgParser" />
+	<bean id="ipValidator" class="com.jwm.routercontroller.util.IpAddressValidator" />
+	<bean id="routerAdapter" class="com.jwm.routercontroller.router.RouterAdapterHttpImpl" c:ipAddress="${routerip}" c:user="${routeruser}" c:password="${routerpass}" c:ipValidator-ref="ipValidator" />
+	<bean id="routerService" class="com.jwm.routercontroller.service.RouterServiceImpl" c:router-ref="routerAdapter" /> 
+	<bean id="signalService" class="com.jwm.routercontroller.service.SignalServiceFileImpl" c:pathToFile="${signalfile}" />
+	<bean id="signalCheckTask" class="com.jwm.routercontroller.task.RouterSignalCheckTask" c:routerService-ref="routerService" c:signaller-ref="signalService" />
+	<bean id="app" class="com.jwm.routercontroller.App" c:parserService-ref="appArgsParserService" c:task-ref="signalCheckTask" />
+
+</beans>
