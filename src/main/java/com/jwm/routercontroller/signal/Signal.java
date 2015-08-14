@@ -14,4 +14,9 @@ public class Signal {
 		return val;
 	}
 
+	@Override
+	public String toString() {
+		return val.toString();
+	}
+
 }

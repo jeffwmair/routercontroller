@@ -25,7 +25,7 @@ public class BaseTest {
 			  ip = props.getProperty("routerip");
 			  user = props.getProperty("routeruser");
 			  pass = props.getProperty("routerpass");
-			  pass = props.getProperty("signalfile");
+			  signalFile = props.getProperty("signalfile");
 		}
 		catch (IOException e) {
 			throw new RuntimeException("Failed to load properties file: '"+propsFilename+"'");

@@ -30,4 +30,9 @@ public class SignalTemporary extends Signal {
 	public SignalValue getPreviousSignalState() {
 		return previousSignalState;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " for "+getSecondsUntilRevert()+" seconds, then back to " + previousSignalState;
+	}
 }
