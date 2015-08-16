@@ -15,7 +15,7 @@
 	<bean id="appArgsParserService" class="com.jwm.routercontroller.util.StringArgParserService" c:args-ref="appArgs" c:parser-ref="argParser" />
 	<bean id="argParser" class="com.jwm.routercontroller.util.StringArgParser" />
 	<bean id="ipValidator" class="com.jwm.routercontroller.util.IpAddressValidator" />
-	<bean id="routerAdapter" class="com.jwm.routercontroller.router.RouterAdapterHttpImpl" c:ipAddress="${routerip}" c:user="${routeruser}" c:password="${routerpass}" c:ipValidator-ref="ipValidator" />
+	<bean id="routerAdapter" class="com.jwm.routercontroller.router.RouterAdapterHttpImpl" c:ipAddress="${routerip}" c:user="${routeruser}" c:password="${routerpass}" c:ipValidator-ref="ipValidator" c:forwardPortFrom="${forward.port.from}" c:forwardPortTo="${forward.port.to}" />
 	<bean id="executorService" class="com.jwm.routercontroller.service.ExecutorService" />
 	<bean id="routerService" class="com.jwm.routercontroller.service.RouterServiceImpl" c:router-ref="routerAdapter" /> 
 	<bean id="routerServiceTemporal" class="com.jwm.routercontroller.service.RouterServiceTemporal" c:routerService-ref="routerService" c:executorService-ref="executorService" /> 

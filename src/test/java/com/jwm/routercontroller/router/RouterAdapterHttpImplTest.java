@@ -27,7 +27,7 @@ public class RouterAdapterHttpImplTest extends BaseTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		when(ipvalidator.validate(anyString())).thenReturn(true);
-		adapter = new RouterAdapterHttpImpl(getRouterIp(), getRouterUser(), getRouterPass(), ipvalidator);
+		adapter = new RouterAdapterHttpImpl(getRouterIp(), getRouterUser(), getRouterPass(), ipvalidator, 80, 80);
 	}
 
 	/**

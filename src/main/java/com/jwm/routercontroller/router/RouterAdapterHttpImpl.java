@@ -20,11 +20,14 @@ public class RouterAdapterHttpImpl implements RouterAdapter {
 
 	private static Logger log = LogManager.getLogger(RouterAdapterHttpImpl.class);
 	private String ipAddress, b64UserPass;
-	public RouterAdapterHttpImpl(String ipAddress, String user, String password, IpAddressValidator ipValidator) {
+	private int forwardPortFrom, forwardPortTo;
+	public RouterAdapterHttpImpl(String ipAddress, String user, String password, IpAddressValidator ipValidator, int forwardPortFrom, int forwardPortTo) {
 		Assert.isTrue(ipValidator.validate(ipAddress));
 		Assert.hasLength(user);
 		Assert.hasLength(password);
 		this.ipAddress = ipAddress;
+		this.forwardPortFrom = forwardPortFrom;
+		this.forwardPortTo = forwardPortTo;
 		b64UserPass = new String(Base64.encodeBase64((user + ":" + password).getBytes()));
 	}
 
@@ -78,7 +81,7 @@ public class RouterAdapterHttpImpl implements RouterAdapter {
 		}
 
 		String sshOnOff = enableSsh ? "on" : "off";
-		String postData = "submit_button=SingleForward&action=Apply&forward_single=15&wait_time=3&name0=None&name1=None&name2=None&name3=None&name4=None&name5=web&name6=&name7=&name8=&name9=&name10=&name11=&name12=&name13=&name14=&name15=&name16=&name17=&name18=&name19=&ip0=0&ip1=0&ip2=0&ip3=0&ip4=0&from5=80&to5=80&pro5=both&ip5=139&from6=6789&to6=22&pro6=both&ip6=109&enable6="+sshOnOff+"&from7=0&to7=0&pro7=both&ip7=0&from8=0&to8=0&pro8=both&ip8=0&from9=0&to9=0&pro9=both&ip9=0&from10=0&to10=0&pro10=both&ip10=0&from11=0&to11=0&pro11=both&ip11=0&from12=0&to12=0&pro12=both&ip12=0&from13=0&to13=0&pro13=both&ip13=0&from14=0&to14=0&pro14=both&ip14=0&from15=0&to15=0&pro15=both&ip15=0&from16=0&to16=0&pro16=both&ip16=0&from17=0&to17=0&pro17=both&ip17=0&from18=0&to18=0&pro18=both&ip18=0&from19=0&to19=0&pro19=both&ip19=0";
+		String postData = "submit_button=SingleForward&action=Apply&forward_single=15&wait_time=3&name0=None&name1=None&name2=None&name3=None&name4=None&name5=web&name6=&name7=&name8=&name9=&name10=&name11=&name12=&name13=&name14=&name15=&name16=&name17=&name18=&name19=&ip0=0&ip1=0&ip2=0&ip3=0&ip4=0&from5=80&to5=80&pro5=both&ip5=139&from6="+Integer.toString(forwardPortFrom)+"&to6="+Integer.toString(forwardPortTo)+"&pro6=both&ip6=109&enable6="+sshOnOff+"&from7=0&to7=0&pro7=both&ip7=0&from8=0&to8=0&pro8=both&ip8=0&from9=0&to9=0&pro9=both&ip9=0&from10=0&to10=0&pro10=both&ip10=0&from11=0&to11=0&pro11=both&ip11=0&from12=0&to12=0&pro12=both&ip12=0&from13=0&to13=0&pro13=both&ip13=0&from14=0&to14=0&pro14=both&ip14=0&from15=0&to15=0&pro15=both&ip15=0&from16=0&to16=0&pro16=both&ip16=0&from17=0&to17=0&pro17=both&ip17=0&from18=0&to18=0&pro18=both&ip18=0&from19=0&to19=0&pro19=both&ip19=0";
 		//String postData = "submit_button=SingleForward&action=Apply&forward_single=15&wait_time=3&name6=ssh&from6=6789&to6=22&pro6=both&ip6=109&enable6="+sshOnOff;
 		byte[] postDataBytes = postData.getBytes(StandardCharsets.UTF_8);
 		int contentLength = postDataBytes.length;
