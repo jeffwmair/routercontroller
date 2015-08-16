@@ -43,7 +43,7 @@ public class RouterAdapterHttpImplTest extends BaseTest {
 	 */
 	@Test
 	public void enableSshLiveTest() {
-		//adapter.enableSshAccess();
+		adapter.enableSshAccess();
 	}
 
 	/**

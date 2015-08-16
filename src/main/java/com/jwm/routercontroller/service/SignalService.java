@@ -1,5 +1,8 @@
-package com.jwm.routercontroller.signal;
+package com.jwm.routercontroller.service;
+
+import com.jwm.routercontroller.signal.*;
 
 public interface SignalService {
-	public Signal getSignal();
+	Signal getSignal();
+	void clearSignal();
 }

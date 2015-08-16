@@ -10,7 +10,12 @@ public class ExecutorService {
 	private Thread thread;
 	private DelayedTaskExecutor executor;
 
+	/**
+	 * Schedule an execution
+	 */
 	public void scheduleExecution(DelayedTaskExecutor newExecutor) {
+
+		log.info("scheduleExecution:" + newExecutor);
 
 		// if there is already a task scheduled, cancel it and join the thread
 		if (this.executor != null) {

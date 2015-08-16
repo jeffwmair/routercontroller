@@ -16,9 +16,11 @@
 	<bean id="argParser" class="com.jwm.routercontroller.util.StringArgParser" />
 	<bean id="ipValidator" class="com.jwm.routercontroller.util.IpAddressValidator" />
 	<bean id="routerAdapter" class="com.jwm.routercontroller.router.RouterAdapterHttpImpl" c:ipAddress="${routerip}" c:user="${routeruser}" c:password="${routerpass}" c:ipValidator-ref="ipValidator" />
+	<bean id="executorService" class="com.jwm.routercontroller.service.ExecutorService" />
 	<bean id="routerService" class="com.jwm.routercontroller.service.RouterServiceImpl" c:router-ref="routerAdapter" /> 
+	<bean id="routerServiceTemporal" class="com.jwm.routercontroller.service.RouterServiceTemporal" c:routerService-ref="routerService" c:executorService-ref="executorService" /> 
 	<bean id="signalService" class="com.jwm.routercontroller.service.SignalServiceFileImpl" c:pathToFile="${signalfile}" />
-	<bean id="signalCheckTask" class="com.jwm.routercontroller.task.RouterSignalCheckTask" c:routerService-ref="routerService" c:signaller-ref="signalService" />
-	<bean id="app" class="com.jwm.routercontroller.App" c:parserService-ref="appArgsParserService" c:task-ref="signalCheckTask" />
+	<bean id="signalCheckTask" class="com.jwm.routercontroller.task.RouterSignalCheckTask" c:routerService-ref="routerService" c:routerServiceTemporal-ref="routerServiceTemporal" c:signaller-ref="signalService" />
+	<bean id="app" class="com.jwm.routercontroller.App" c:parserService-ref="appArgsParserService" c:task-ref="signalCheckTask" c:sleeptime="${sleeptime.seconds}" />
 
 </beans>

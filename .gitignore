@@ -2,4 +2,9 @@
 target/
 **/local.properties
 **/unittest.properties
+logs/
 
+#eclipse stuff
+.classpath
+.project
+.settings/

@@ -1,7 +1,6 @@
 package com.jwm.routercontroller.service;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 import org.apache.log4j.LogManager;
@@ -21,6 +20,17 @@ public class SignalServiceFileImpl implements SignalService {
 	}
 
 	/**
+	 * Clear the signal
+	 */
+	@Override
+	public void clearSignal() {
+		File signalFile = new File(pathToFile);
+		if (signalFile.exists()) {
+			signalFile.renameTo(new File(pathToFile + ".old"));
+		}
+	}
+
+	/**
 	 * Get the signal
 	 */
 	@Override
@@ -32,8 +42,7 @@ public class SignalServiceFileImpl implements SignalService {
 		try {
 			is = new FileInputStream(pathToFile);
 		}
-		catch(Exception ex) {
-			log.error(ex.getMessage(), ex);
+		catch(FileNotFoundException ex) {
 			return new SignalNone();
 		}
 

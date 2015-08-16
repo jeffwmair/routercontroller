@@ -19,13 +19,15 @@ public class RouterSignalCheckTaskTest {
 	private RouterSignalCheckTask service;
 	@Mock
 	private RouterService routerService;
+	@Mock
+	private RouterService routerServiceTemporal;
 	@Mock 
 	private SignalService signal;
 
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
-		service = new RouterSignalCheckTask(routerService, signal);
+		service = new RouterSignalCheckTask(routerService, routerServiceTemporal, signal);
 		System.out.println(service);
 	}
 
@@ -38,33 +40,8 @@ public class RouterSignalCheckTaskTest {
 		when(signal.getSignal()).thenReturn(noSignal);
 		service.execute();
 		verify(routerService).processSignal(noSignal);
+		verify(routerServiceTemporal).processSignal(noSignal);
+		verify(signal).clearSignal();
 	}
 
-	/**
-	 * Make sure that only the enable method is called on the router if we get a enable signal
-	 */
-	@Test
-	public void testEnableSshForEnableSignal() {
-		Signal enableSig = new Signal(SignalValue.enable);
-		when(signal.getSignal()).thenReturn(enableSig);
-		service.execute();
-		/*
-		verify(router).enableSshAccess();
-		verify(router, never()).disableSshAccess();
-		*/
-	}
-
-	/**
-	 * Make sure that only the disable method is called on the router if we get a disable signal
-	 */
-	@Test
-	public void testDisableSshForDisableSignal() {
-		Signal disableSig = new Signal(SignalValue.disable);
-		when(signal.getSignal()).thenReturn(disableSig);
-		service.execute();
-		/*
-		verify(router, never()).enableSshAccess();
-		verify(router).disableSshAccess();
-		*/
-	}
 }

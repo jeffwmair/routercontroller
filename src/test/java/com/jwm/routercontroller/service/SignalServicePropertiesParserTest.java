@@ -31,9 +31,9 @@ public class SignalServicePropertiesParserTest {
 	@Test
 	public void testForPropertiesWithDuration() {
 		when(props.isEmpty()).thenReturn(false);
-		when(props.containsKey("duration")).thenReturn(true);
-		when(props.getProperty("duration")).thenReturn("1");
-		when(props.getProperty("state", "none")).thenReturn("enable");
+		when(props.containsKey("duration.seconds")).thenReturn(true);
+		when(props.getProperty("duration.seconds")).thenReturn("1");
+		when(props.getProperty("newstate", "none")).thenReturn("enable");
 		service = new SignalServicePropertiesParser(props);
 		Signal sig = service.getSignal();
 		Assert.assertEquals(SignalValue.enable, sig.getSignalValue());

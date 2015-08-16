@@ -1,24 +1,23 @@
 package com.jwm.routercontroller.task;
 
-import com.jwm.routercontroller.router.*;
-import com.jwm.routercontroller.signal.*;
-import com.jwm.routercontroller.service.*;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
-import org.springframework.util.Assert;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import com.jwm.routercontroller.service.RouterService;
+import com.jwm.routercontroller.service.SignalService;
+import com.jwm.routercontroller.signal.Signal;
 
 public class RouterSignalCheckTask implements Task {
 
 	private static Logger log = LogManager.getLogger(RouterSignalCheckTask.class);
 	private SignalService signaller;
 	private RouterService routerService;
+	private RouterService routerServiceTemporal;
 
-	public RouterSignalCheckTask(RouterService routerService, SignalService signaller) {
+	public RouterSignalCheckTask(RouterService routerService, RouterService routerServiceTemporal, SignalService signaller) {
 		this.signaller = signaller;
 		this.routerService = routerService;
+		this.routerServiceTemporal = routerServiceTemporal;
 	}
 
 	/**
@@ -30,6 +29,8 @@ public class RouterSignalCheckTask implements Task {
 		log.info("Executing");
 		Signal signal = signaller.getSignal();
 		routerService.processSignal(signal);
+		routerServiceTemporal.processSignal(signal);
+		signaller.clearSignal();
 	}
 
 }

@@ -24,11 +24,14 @@ public class SignalServicePropertiesParser {
 			return new SignalNone();
 		}
 
-		SignalValue newState = parseSignalValue(props.getProperty("state", "none"));
+		SignalValue newState = parseSignalValue(props.getProperty("newstate", "none"));
+		if (log.isDebugEnabled()) log.debug("Parsed new state:" + newState);
 
-		if (props.containsKey("duration")) {
+		String durationPropKey = "duration.seconds";
+		if (props.containsKey(durationPropKey)) {
 			try {
-				int duration = Integer.parseInt(props.getProperty("duration"));
+				int duration = Integer.parseInt(props.getProperty(durationPropKey));
+				if (log.isDebugEnabled()) log.debug("Creating new SignalTemporary with duration:" + duration);
 				return new SignalTemporary(newState, duration);
 			}
 			catch(Exception ex) {

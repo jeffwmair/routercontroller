@@ -10,13 +10,17 @@ public class App {
 
 	private static Logger log = LogManager.getLogger(App.class);
 
-	public App(StringArgParserService parserService, Task task) throws Exception { 
+	public App(StringArgParserService parserService, Task task, int sleeptime) throws Exception { 
 
 		log.info("STARTING APP...");
+		long sleeptimeMs = 1000*sleeptime;
 
 		while(true) {
 			task.execute();	
-			Thread.sleep(2000);
+			if (log.isDebugEnabled()) {
+				log.debug("Sleeping for "+sleeptime+" seconds");
+			}
+			Thread.sleep(sleeptimeMs);
 		}
 
 	}
