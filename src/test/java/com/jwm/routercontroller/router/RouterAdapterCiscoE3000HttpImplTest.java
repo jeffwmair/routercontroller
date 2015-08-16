@@ -16,9 +16,9 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 
-public class RouterAdapterHttpImplTest extends BaseTest {
+public class RouterAdapterCiscoE3000HttpImplTest extends BaseTest {
 
-	private RouterAdapterHttpImpl adapter;
+	private RouterAdapterCiscoE3000HttpImpl adapter;
 
 	@Mock
 	private IpAddressValidator ipvalidator;
@@ -27,15 +27,7 @@ public class RouterAdapterHttpImplTest extends BaseTest {
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		when(ipvalidator.validate(anyString())).thenReturn(true);
-		adapter = new RouterAdapterHttpImpl(getRouterIp(), getRouterUser(), getRouterPass(), ipvalidator, 80, 80);
-	}
-
-	/**
-	 * Should validate the ipaddress
-	*/
-	@Test
-	public void ensureIpValidationTest() {
-		verify(ipvalidator).validate(anyString());
+		adapter = new RouterAdapterCiscoE3000HttpImpl(getRouterIp(), getRouterUser(), getRouterPass(), ipvalidator, 80, 80);
 	}
 
 	/**

@@ -16,12 +16,12 @@ import org.apache.log4j.Logger;
 import org.springframework.util.Assert;
 import org.apache.commons.codec.binary.Base64;
 
-public class RouterAdapterHttpImpl implements RouterAdapter {
+public class RouterAdapterCiscoE3000HttpImpl implements RouterAdapter {
 
-	private static Logger log = LogManager.getLogger(RouterAdapterHttpImpl.class);
+	private static Logger log = LogManager.getLogger(RouterAdapterCiscoE3000HttpImpl.class);
 	private String ipAddress, b64UserPass;
 	private int forwardPortFrom, forwardPortTo;
-	public RouterAdapterHttpImpl(String ipAddress, String user, String password, IpAddressValidator ipValidator, int forwardPortFrom, int forwardPortTo) {
+	public RouterAdapterCiscoE3000HttpImpl(String ipAddress, String user, String password, IpAddressValidator ipValidator, int forwardPortFrom, int forwardPortTo) {
 		Assert.isTrue(ipValidator.validate(ipAddress));
 		Assert.hasLength(user);
 		Assert.hasLength(password);
